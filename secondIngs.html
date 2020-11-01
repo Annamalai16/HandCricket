@@ -1,0 +1,119 @@
+<head>
+    <title>Second Innings</title>
+    <style>
+        body {
+            background-image: url('bg.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+    <style>
+        .button {
+            background-color: chartreuse;
+            color: black;
+            font-size: 25px;
+            text-align: center;
+            padding: 16px 32px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .keypadAllign {
+            position: absolute;
+            top: 55%;
+            left: 40%;
+        }
+    </style>
+
+    <body>
+        <h1 style="color:black;font-size: 400%; text-align: center; font-family: 'Times New Roman', Times, serif;"=> <strong><i>Hand Cricket</i></strong></h1>
+
+        <h4>
+            <h2 style="color: black; font-size: 200%; float: left;" id="printTarget"> </h2>
+            <h3 style="color: black; font-size: 200%; float: right;" id="printReqd"> </h3>
+        </h4>
+
+        <div style="text-align: center;">
+            <h2 style="font-size: 200%; font-style: italic;" id="yourcall"> </h2>
+            <h3 style="font-size: 200%; font-style: italic;" id="compcall"> </h3>
+            <h4 style="font-size: 200%; font-style: italic;" id="printScore"> </h4>
+        </div>
+
+        <div class="keypadAllign" id="keypad">
+            <button class="button" onclick="add(1)"> 1 </button>
+            <button class="button" onclick="add(2)"> 2 </button>
+            <button class="button" onclick="add(3)"> 3 </button>
+            <br><br>
+            <button class="button" onclick="add(4)"> 4 </button>
+            <button class="button" onclick="add(5)"> 5 </button>
+            <button class="button" onclick="add(6)"> 6 </button>
+            <br><br>
+            <button class="button" onclick="add(7)"> 7 </button>
+            <button class="button" onclick="add(8)"> 8 </button>
+            <button class="button" onclick="add(9)"> 9 </button>
+        </div>
+
+    </body>
+    <script>
+        var player = sessionStorage.getItem("player");
+        var computer = sessionStorage.getItem("computer");
+        var score = 0;
+        var target = sessionStorage.getItem("score");
+        document.getElementById("printTarget").innerHTML = "Target: ".concat(target);
+        document.getElementById("printReqd").innerHTML = "Reqd Runs: ".concat(target - score);
+
+        function add(userChoice) {
+            var compChoice = Math.floor(Math.random() * 9 + 1);
+            var keypad = document.getElementById("keypad");
+            document.getElementById("yourcall").innerHTML = "Your Choice : ".concat(userChoice.toString());
+            document.getElementById("compcall").innerHTML = "Computer's Choice : ".concat(compChoice.toString());
+            if (check(userChoice, compChoice) == 1) {
+                score += userChoice;
+                if (score >= target) {
+                    keypad.remove();
+                    if (player == 2) {
+                        document.getElementById("printScore").innerHTML = "You know what.....";
+                        setTimeout(function() {
+                            location.replace("Win.html")
+                        }, 1500);
+                    } else {
+                        document.getElementById("printScore").innerHTML = "The target wasn't much enough!!";
+                        setTimeout(function() {
+                            location.replace("nextTime.html")
+                        }, 1500);
+                    }
+                } else {
+                    document.getElementById("printScore").innerHTML = "Score: ".concat(score.toString());
+                    document.getElementById("printReqd").innerHTML = "Reqd Runs: ".concat((target - score).toString());
+                }
+            } else {
+                keypad.remove();
+                if (score == target - 1) {
+                    document.getElementById("printScore").innerHTML = "Oh wow...It's 50-50!!";
+                    setTimeout(function() {
+                        location.replace("tie.html")
+                    }, 1500);
+                } else if (player == 1) {
+                    document.getElementById("printScore").innerHTML = "You know what.....";
+                    setTimeout(function() {
+                        location.replace("Win.html")
+                    }, 1500);
+                } else {
+                    document.getElementById("printScore").innerHTML = "We were a bit short!!";
+                    setTimeout(function() {
+                        location.replace("nextTime.html")
+                    }, 1500);
+                }
+            }
+        }
+
+        function check(userChoice, compChoice) {
+            if (userChoice == compChoice) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    </script>
+</head>

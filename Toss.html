@@ -1,0 +1,108 @@
+<head>
+    <title>Toss</title>
+    <style>
+        body {
+            background-image: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        
+        .textAllign {
+            position: absolute;
+            top: 30%;
+        }
+        
+        .buttonAllign {
+            position: absolute;
+            top: 65%;
+            left: 35%;
+        }
+        
+        .button {
+            background-color: cyan;
+            color: black;
+            font-size: 25px;
+            text-align: center;
+            padding: 16px 32px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .imageallign {
+            position: absolute;
+            top: 30%;
+        }
+    </style>
+</head>
+
+<h1 style="color:black;font-size: 400%; text-align: center; font-family: 'Times New Roman', Times, serif;"=> <strong><i>Hand Cricket</i></strong></h1>
+
+<br><br>
+
+<h1 id="firstLine" style="text-align: center; font-size: 200%;"></h1>
+<h2 id="SecondLine" style="text-align: center; font-size: 200%;"></h2>
+<h3 id="thirdLine" style="text-align: center; font-size: 200%;"></h3>
+
+<div class="buttonAllign" id="hideButton">
+    <button class="button" style="margin-right: 70px;" onclick="check(1)">HEADS</button>
+    <button class="button" style="margin-right: 70px;" onclick="check(0)">TAILS</button>
+</div>
+
+<div class="buttonAllign" id="showButton" hidden='true'>
+    <button class="button" style="margin-right: 70px;" onclick="allot(1)">BAT</button>
+    <button class="button" style="margin-right: 70px;" onclick="allot(2)">BOWL</button>
+</div>
+
+<script>
+    document.getElementById("firstLine").innerHTML = "It's toss time!!";
+    document.getElementById("SecondLine").innerHTML = "What's your call??";
+
+    var player;
+    var computer;
+
+    function check(userChoice) {
+        var coin = Math.floor(Math.random() * 2);
+        var button = document.getElementById("hideButton");
+        button.remove();
+        if (userChoice == coin) {
+            document.getElementById("firstLine").innerHTML = "Woah..Congratulations!! You won the Toss!!";
+            document.getElementById("SecondLine").innerHTML = "What do you like to do??";
+            var show = document.getElementById("showButton");
+            show.hidden = false;
+        } else {
+            document.getElementById("firstLine").innerHTML = "Oh No!! Bad luck!!";
+            document.getElementById("SecondLine").innerHTML = "The Toss dint go up your way!!";
+            var compChoice = Math.floor(Math.random() * 2 + 1);
+            computer = compChoice;
+            if (compChoice == 1) {
+                document.getElementById("thirdLine").innerHTML = "Let's chase the target!!";
+                player = 2;
+            } else {
+                document.getElementById("thirdLine").innerHTML = "Let's defend the target!!";
+                player = 1;
+            }
+            sessionStorage.setItem("player", player);
+            sessionStorage.setItem("computer", computer);
+            setTimeout(function() {
+                gotoNext();
+            }, 2000);
+        }
+    }
+
+    function allot(userCall) {
+        player = userCall;
+        if (userCall == 1) {
+            computer = 2;
+        } else {
+            computer = 1;
+        }
+        sessionStorage.setItem("player", player);
+        sessionStorage.setItem("computer", computer);
+        gotoNext();
+    }
+
+    function gotoNext() {
+        location.replace("firstIngs.html");
+    }
+</script>

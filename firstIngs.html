@@ -1,0 +1,86 @@
+<head>
+    <title> First Innings</title>
+    <style>
+        body {
+            background-image: url('bg.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+    <style>
+        .button {
+            background-color: chartreuse;
+            color: black;
+            font-size: 25px;
+            text-align: center;
+            padding: 16px 32px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .keypadAllign {
+            position: absolute;
+            top: 55%;
+            left: 40%;
+        }
+    </style>
+
+    <body>
+        <h1 style="color:black;font-size: 400%; text-align: center; font-family: 'Times New Roman', Times, serif;"=> <strong><i>Hand Cricket</i></strong></h1>
+        <div style="text-align: center;">
+            <h2 style="font-size: 200%; font-style: italic;" id="yourcall"> </h2>
+            <h3 style="font-size: 200%; font-style: italic;" id="compcall"> </h3>
+            <h4 style="font-size: 200%; font-style: italic;" id="printScore"> </h4>
+        </div>
+        <p class="keypadAllign" id="keypad">
+            <button class="button" onclick="add(1)"> 1 </button>
+            <button class="button" onclick="add(2)"> 2 </button>
+            <button class="button" onclick="add(3)"> 3 </button>
+            <br><br>
+            <button class="button" onclick="add(4)"> 4 </button>
+            <button class="button" onclick="add(5)"> 5 </button>
+            <button class="button" onclick="add(6)"> 6 </button>
+            <br><br>
+            <button class="button" onclick="add(7)"> 7 </button>
+            <button class="button" onclick="add(8)"> 8 </button>
+            <button class="button" onclick="add(9)"> 9 </button>
+        </p>
+        <div class="keypadAllign">
+            <button class="button" style="background-color: aqua;" id="next" hidden='true' onclick="gotonext()">Second Innings</button>
+        </div>
+
+    </body>
+    <script>
+        var score = 0;
+
+        function add(userChoice) {
+            var compChoice = Math.floor(Math.random() * 9 + 1);
+            var nextButton = document.getElementById("next");
+            var keypad = document.getElementById("keypad");
+            document.getElementById("yourcall").innerHTML = "Your Choice : ".concat(userChoice.toString());
+            document.getElementById("compcall").innerHTML = "Computer's Choice : ".concat(compChoice.toString());
+            if (check(userChoice, compChoice) == 1) {
+                score += userChoice;
+                document.getElementById("printScore").innerHTML = "Score: ".concat(score.toString());
+            } else {
+                document.getElementById("printScore").innerHTML = "Ouch, It's Out!! \n Target for Second Innings: ".concat((score + 1).toString());
+                keypad.remove();
+                sessionStorage.setItem("score", score + 1);
+                nextButton.hidden = false;
+            }
+        }
+
+        function check(userChoice, compChoice) {
+            if (userChoice == compChoice) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        function gotonext() {
+            location.replace("secondIngs.html");
+        }
+    </script>
+</head>

@@ -52,6 +52,8 @@
 
     </body>
     <script>
+        const player = sessionStorage.getItem("player");
+        const computer = sessionStorage.getItem("computer");
         var score = 0;
 
         function add(userChoice) {
@@ -61,7 +63,7 @@
             document.getElementById("yourcall").innerHTML = "Your Choice : ".concat(userChoice.toString());
             document.getElementById("compcall").innerHTML = "Computer's Choice : ".concat(compChoice.toString());
             if (check(userChoice, compChoice) == 1) {
-                score += userChoice;
+                score += player == 1 ? userChoice : compChoice;
                 document.getElementById("printScore").innerHTML = "Score: ".concat(score.toString());
             } else {
                 document.getElementById("printScore").innerHTML = "Ouch, It's Out!! \n Target for Second Innings: ".concat((score + 1).toString());

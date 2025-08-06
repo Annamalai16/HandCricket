@@ -56,8 +56,8 @@
 
     </body>
     <script>
-        var player = sessionStorage.getItem("player");
-        var computer = sessionStorage.getItem("computer");
+        const player = sessionStorage.getItem("player");
+        const computer = sessionStorage.getItem("computer");
         var score = 0;
         var target = sessionStorage.getItem("score");
         document.getElementById("printTarget").innerHTML = "Target: ".concat(target);
@@ -69,7 +69,7 @@
             document.getElementById("yourcall").innerHTML = "Your Choice : ".concat(userChoice.toString());
             document.getElementById("compcall").innerHTML = "Computer's Choice : ".concat(compChoice.toString());
             if (check(userChoice, compChoice) == 1) {
-                score += userChoice;
+                score += player == 2 ? userChoice : compChoice;
                 if (score >= target) {
                     keypad.remove();
                     if (player == 2) {
